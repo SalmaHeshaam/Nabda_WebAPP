@@ -32,7 +32,7 @@ Nabda uses a number of open-source projects to work properly here are some of th
 - `sweetalert2` : (WAI-ARIA) replacement for JavaScript's popup boxes
 - `AOS` : some amaizing animations
  
-> Note : I didn't use front-end frameworks to make it more chalangable but it was a huge mistake, lol
+> Note : I didn't use front end frameworks to make it more challenging, but it was a huge mistake, lol
 
 
 ## Installation
