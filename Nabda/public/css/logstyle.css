@@ -493,9 +493,10 @@ a {
         }
 
         .container.sign-up-mode:before {
-            bottom: 28%;
+            bottom: 22%;
             left: 50%;
         }
+    
 }
 /* =====Upload file ===== */
 .CVupload {
