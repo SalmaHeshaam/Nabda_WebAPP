@@ -17,7 +17,7 @@
     <!-- plotly script -->
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="/js/sweetalert2.min.css">
+    <!-- <link rel="stylesheet" href="/js/sweetalert2.min.css"> -->
 
     <link rel="stylesheet" href="/css/sideBar.css">
     <link rel="stylesheet" href="/css/style.css">
@@ -28,6 +28,7 @@
 
     <!-- Wrapper -->
     <div class="wrapper">
+        <input type="hidden" id="csrf" name="_csrf" value="<%= csrftoken %>">
 
         <!-- Sidebar -->
         <nav class="sidebar">
@@ -70,9 +71,6 @@
                     <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                         <span class="navbar-toggler-icon "></span>
                     </button>
-                    <!-- <form class="d-flex mx-auto w-50 ">
-                        <input class="form-control " type="search" placeholder="Search" aria-label="Search">
-                    </form> -->
                 </div>
             </nav>
         </div>
@@ -255,7 +253,7 @@
             <section class="py-4" id="sectionTwo">
                 <div class="row shadow mx-3 rounded justify-content-center py-4 " >
                     <!-- Doctor Diagnosis-->
-                    <div class="col-xl shadow m-2 rounded p-3 " data-aos="fade-up" data-aos-duration="800"  id="doctorDiagnosisSection" >
+                    <div class="col-xl shadow m-2 rounded p-3 hidden" data-aos="fade-up" data-aos-duration="800"  id="doctorDiagnosisSection" >
                         <div class="container pb-2">
                             <h5 class="mr-4 p-2 d-inline text-info"> Doctor Diagnosis </h5>    
                             <button class="btn bg-info text-white d-inline" data-toggle="modal" data-target="#diagnosisModal"> <i class="fas fa-plus p-1 py-2"></i> </button>
@@ -267,28 +265,8 @@
                                     <th></th>
 
                                 </thead>
-                                <tbody>
-                              
-                               <!-- doctor row -->
-
-                                <tr class="shadow-sm " data-toggle="modal" data-id="1" data-target="#viewDiagnosis">
-                                    <td>
-                                        <img src="/img/viewPatient/doctor.jpg" id="doctorImg" class="rounded-circle  img-fluid" alt="doctor" >
-                                    </td>
-                                    <td  class="text-middle py-3">
-                                        <div>
-                                            <h6 class="doctorName"> Dr Name </h6>
-                                            <h6 class="diagnoseDate"> 2018 / 4 / 19 </h6>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tfoot>
-
-                                </tfoot>
-                              
-                                
-                                
-                            </tbody>
+                                <tbody>                          
+                                </tbody>
                             </table>
                         </div>
 
@@ -296,7 +274,7 @@
                     </div>
 
                     <!-- Medicine -->
-                    <div class="col-lg shadow m-2 rounded p-3 " data-aos="fade-up" data-aos-duration="850" id="medicineSection">
+                    <div class="col-lg shadow m-2 rounded p-3 hidden" data-aos="fade-up" data-aos-duration="850" id="medicineSection">
                         <div class="container pb-2">
                             <h5 class="mr-4 p-2 d-inline text-info"> Medicine </h5>
                             <button class="btn bg-info text-white d-inline" data-toggle="modal" data-target="#MedicineModal"> <i class="fas fa-plus p-1 py-2"></i> </button>
@@ -347,17 +325,22 @@
                     <div class="col-lg shadow m-2 rounded p-3 " data-aos="fade-up"data-aos-duration="900" >
                         <div class="container pb-2">
                             <h5 class="mr-4 p-2 d-inline text-info"> Medical Test </h5>
-                            <label for="test-upload" class="custom-file-upload bg-info text-white rounded" id="addmedicalTest">
+                            <label for="test-upload" class="custom-file-upload bg-info text-white rounded hidden" id="addmedicalTest">
                                 <i class="fas fa-plus"></i>
                               </label>
-                              <input id="test-upload" name='CTScan' type="file" accept=".pdf,.doc,.png, .jpg"  style="display:none;">
+                              <input id="test-upload" name='CTScan' type="file" accept=".png, .jpg"  style="display:none;">
+
                         </div>
                         <div class="container mb-3" id="medicalTest">
                             <table class="table table-hover" id="medicalTestTable">
+                                <thead>
+                                    <th></th>
+                                    <th></th>
+                                </thead>
                                 <tbody>
                                 <!-- medical test row -->
-                                
-                                <!-- <tr class="shadow-sm " data-toggle="modal" data-id="1" data-target="#MedicalTestModal">
+<!--                                 
+                                <tr class="shadow-sm " data-toggle="modal" data-id="1" data-target="#MedicalTestModal">
                                     <td>
                                         <img src="/img/viewPatient/document.svg" class="rounded img-fluid" alt="doctor" >
                                     </td>
@@ -367,6 +350,9 @@
                                     </td>
                                 </tr> -->
                             </tbody>
+                            <tfoot>
+
+                            </tfoot>
                             </table>
                         </div>
                     <a class="anchors" href="/patientList/patient/medicalTest"> View All </a>
@@ -376,26 +362,20 @@
                     <div class="col-lg shadow m-2 rounded p-3 " data-aos="fade-up" data-aos-duration="950" >
                         <div class="container pb-2">
                             <h5 class="mr-4 p-2 d-inline text-info"> MRI Scan </h5>
-                            <label for="file-upload" class="custom-file-upload bg-info text-white rounded"id="addCTScan">
+                            <label for="file-upload" class="custom-file-upload bg-info text-white rounded hidden"id="addCTScan">
                                 <i class="fas fa-plus"></i>
-                              </label>
+                            </label>
                               <input id="file-upload" name='CTScan' type="file" accept=".dcm"  style="display:none;">
+
                         </div>
                         <div class="container mb-3" id="ctScan">
                             <table class="table table-hover " id="MRITable">
+                                <thead>
+                                    <th></th>
+                                    <th></th>
+                                </thead>
                                 <tbody>
-                               
-                                <!-- MRI Scan row -->
-                                <!-- <tr class="shadow-sm "data-toggle="modal" data-id="1" data-target="#MRIModal">
-                                    <td>
-                                        <img src="/img/viewPatient/document.svg" class="rounded img-fluid" alt="doctor" >
-                                    </td>
-                                    <td  class="text-left py-3">
-                                            <h6 class="scanName"> MRI-Scan.pdf </h6>
-                                            <h6 class="scanDate"> 4 / 7 / 2021 </h6>
-                                    </td>
-                                </tr> -->
-                            </tbody>
+                                </tbody>
                             </table>
                         </div>
                     <a class="anchors" href="/patientList/patient/ctScan"> View All </a>
@@ -405,7 +385,7 @@
             <!--End Section One -->
 
             <!-- Section Three -->
-            <section class="py-4" id="sectionThree">
+            <section class="py-4 hidden" id="sectionThree">
                 <div class="row shadow mx-3 rounded justify-content-center py-4 ">
                     <!-- ECG Result-->
                     <div class="col-xl shadow m-2 rounded p-3 " data-aos="fade-up" data-aos-duration="950">
@@ -606,17 +586,17 @@
                 </button>
                 </div>
                 <div class="modal-body">
-                    <div class="container-fluid ">
+                    <div class="container-fluids">
                         <form >
                             <div class="row mb-3">
                                 <div class="col ">
                                     <div class="row">
                                     <div class=" col text-left">
                                         <img src="/img/viewPatient/doctor.jpg" id="doctorImg" class="d-inline rounded-circle  img-fluid mr-2" alt="doctor" >
-                                        <h6 class="doctorName d-inline "> Dr Name </h6>
+                                        <h6 class="doctorName d-inline " id="DrName"></h6>
                                     </div>
                                     <div class="col text-right p-3">
-                                        <h6 class="diagnoseDate  d-inline  py-3 "> 20 / 4 / 2021 </h6>
+                                        <h6 class="diagnoseDate  d-inline  py-3 " id="diagnoseDate"> </h6>
 
                                     </div>
                                 </div>
@@ -625,14 +605,13 @@
                             <div class="row mb-3">
                                 <div class="col ">
                                     <h6 class="text-left"> Symptoms </h6>
-                                    <div class="form-control text-left" id="currentSymptoms"> aaa  </div>
+                                    <div class="form-control text-left" id="currentSymptoms"> </div>
                                 </div>
                             </div>
-    
                             <div class="row mb-3">
                                 <div class="col ">
                                     <h6 class="text-left"> Diagnosis </h6>
-                                    <div class="form-control text-left" id="currentDiagnosis"> aaaa </div>
+                                    <div class="form-control text-left" id="currentDiagnosis"> </div>
                                 </div>
                             </div>
                         </form>
@@ -764,7 +743,6 @@
                     </div>
                 </div>
             </div>
-            
         </div>
         </div>
     </div>
@@ -774,21 +752,12 @@
         <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel"> CBC  </h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
             </div>
             <div class="modal-body">
-                <div class="container-fluid">
-                    <img src="/img/viewPatient/CBC.png" alt="test-result" id="medicalTestImg">
-
-                    <div class="modal-footer pr-4">
-                        <button type="button" class="btn btn-secondary text-center" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-            
+            </div>            
         </div>
         </div>
     </div>
@@ -798,30 +767,15 @@
         <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel"> MRI-Scan  </h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
             </div>
             <div class="modal-body">
-                <div class="row container-fluid">
-                    <div class="col">
-                        <h6> Result </h6>
-                        <img src="/img/viewPatient/input.png" class="MRI" >
-                    </div>
-                    <!-- <div class="col">
-                        <img src="/img/viewPatient/rightArrow.png" class="w-50" >
-                    </div> -->
-                    <div class="col">
-                        <h6> Take care of </h6>
-                        <img src="/img/viewPatient/output.png" class="MRI" >
-                    </div>
-                </div>
-                <div class="modal-footer pr-4">
-                    <button type="button" class="btn btn-secondary text-center mr-5" data-dismiss="modal">Close</button>
-                </div>
             </div>
-            
+            <div class="modal-footer pr-4">
+                <button type="button" class="btn btn-secondary text-center mr-5" data-dismiss="modal">Close</button>
+            </div>
         </div>
         </div>
     </div>
@@ -846,6 +800,8 @@
     <!-- sweetAlert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <script src="/js/scripts.js"></script>
+    <script src="/js/sideBar.js"></script>
+
     
     <script>
         $('medImages').click(function(){

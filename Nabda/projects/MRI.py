@@ -14,6 +14,9 @@ from keras.callbacks import ModelCheckpoint, LearningRateScheduler, EarlyStoppin
 from keras.layers import Input, concatenate, Conv2D, MaxPooling2D, UpSampling2D, Reshape, core, Dropout, Activation, Flatten, Lambda, BatchNormalization
 from keras.layers import *
 import random
+import pydicom
+from PIL import Image
+
 ImgName=""
 
 
@@ -93,7 +96,7 @@ def format_and_render_plot(image, title = "Image", cmap_type = "gray"):
   for spine in plt.gca().spines.values():
         spine.set_visible(False)
   ImgName="result"+str(rund)+".png"
-  plt.savefig('projects/Out_img/'+ImgName)
+  plt.savefig('public/img/Out_img/Seg'+ImgName)
   # plt.show()
   return ImgName
   
@@ -119,10 +122,17 @@ def get_image(Path):
     Img = np.expand_dims(Img, 0)
   return Img
 
+def CreateInputImg(ImgName):
+   ds = pydicom.dcmread('projects/Input_img/'+ImgName) # read dicom image
 
+   img = ds.pixel_array.astype(float) # get image array
+   rescaled_img=(np.maximum(img,0)/img.max())*255
+   finalImg= np.uint8(rescaled_img)
+   finalImg=Image.fromarray(finalImg)
+   finalImg.save('public/img/Out_img/Original/'+ImgName.split('.')[0] +'.jpg')
+   return ImgName.split('.')[0] +'.jpg'
 
-def main():
-    ImgName="test1.dcm"
+def main(ImgName):
 
     img=get_image('projects/Input_img/'+ImgName)
     model =Create_Model()
@@ -132,8 +142,8 @@ def main():
     return NewImgName
 
 if __name__ == '__main__':
-    x= main()
-    sys.stdout.write(x)
-    
+    ImgName=sys.argv[1]
+    y=CreateInputImg(ImgName)
+    x= main(ImgName)
+    sys.stdout.write(x+"/"+y)
     sys.exit()
-

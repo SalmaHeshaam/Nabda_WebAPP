@@ -15,6 +15,11 @@ const path = require('path');
 
 app.use(cookieParser());
 app.use(csrfMiddleware);
+app.use(function (req, res) {
+  res.locals._csrf = req.csrfToken();
+  res.locals.csrf_form_html = '<input type="hidden" name="_csrf" value="' + req.csrfToken() + '" >';
+  req.next();
+});
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '/public')))
 app.use(favicon(path.join(__dirname,'public','img','favicon.ico')));
