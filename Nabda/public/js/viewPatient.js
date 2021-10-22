@@ -437,7 +437,13 @@ $('#file-upload').change(function(e){
     files = e.target.files;
     const formData = new FormData();
     formData.append('uploads', files[0], files[0].name);
+    var csrf=$("#csrf").val();
     if (files.length != 0) {
+    $.ajaxSetup({
+        headers: {
+        'X-CSRF-Token': csrf
+        }
+    });
     $.ajax({
         type: 'POST',
         url: 'http://localhost:5000/patientList/patient/ctScan/MRI-result',
@@ -450,18 +456,19 @@ $('#file-upload').change(function(e){
             //get current data
             var today = new Date();
             var date = today.getDate()+' / '+(today.getMonth()+1)+' / '+today.getFullYear();  
-            //get input n output img 
+            //get input n output img
+            console.log(response) 
             var imgs = response[0].split('/');
             var outImgName = "Seg"+imgs[0];
             var inImgName = imgs[1];
 
-            //build new row 
             Swal.fire({
-                    position: 'top-middle',
-                    icon: 'success',
-                    showConfirmButton: false,
-                    timer: 1500
+                position: 'top-middle',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 1500
             })
+            //build new row 
             drawMRIRow(inImgName,outImgName, date);
             //upload url path to firestore
             firebase.firestore().collection(`accounts/${loginMail}/users/${patientId}/patientData/MRIs/MRI`).add({
